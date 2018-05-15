@@ -30,8 +30,8 @@ class App extends Component {
     onAdd = () => this.setState({adding: true});
 
     getDetails = (event) => {
-        const movie = this.props.message.reduce((acc, curr) => curr.movie_id === event.target.id ? curr : acc, null);
-        this.setState({selected: movie});
+        const recipe = this.props.message.reduce((acc, curr) => curr.recipe_id === event.target.id ? curr : acc, null);
+        this.setState({selected: recipe});
     };
 
     noDetails = () => this.setState({selected: null});
@@ -40,18 +40,18 @@ class App extends Component {
 
     getDisplay = () => {
         if (this.state.selected) {
-            return <Details movie={this.state.selected} back={this.noDetails}/>
+            return <Details recipe={this.state.selected} back={this.noDetails}/>
         }
         if (this.state.adding) {
             return <AddForm cancel={this.cancelAdd}/>
         }
-        let movies = this.props.message.map(item => (
-            <Movie key={item.movie_id} movie={item} click={this.getDetails}/>
+        let recipes = this.props.message.map(item => (
+            <Movie key={item.recipe_id} movie={item} click={this.getDetails}/>
         ));
         return (
             <div>
                 <Button onClick={this.onAdd} color="secondary">Add a movie</Button>
-                {movies}
+                {recipes}
             </div>
         )
     };

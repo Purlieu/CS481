@@ -4,13 +4,13 @@ import {withAuth} from '../reducers'
 export const ECHO_REQUEST = '@@echo/ECHO_REQUEST';
 export const ECHO_SUCCESS = '@@echo/ECHO_SUCCESS';
 export const ECHO_FAILURE = '@@echo/ECHO_FAILURE';
-export const ADD_MOVIE_REQUEST = '@@echo/ADD_MOVIE_REQUEST';
-export const ADD_MOVIE_SUCCESS = '@@echo/ADD_MOVIE_SUCCESS';
-export const ADD_MOVIE_FAILURE = '@@echo/ADD_MOVIE_FAILURE';
+export const ADD_RECIPE_REQUEST = '@@echo/ADD_RECIPE_REQUEST';
+export const ADD_RECIPE_SUCCESS = '@@echo/ADD_RECIPE_REQUEST';
+export const ADD_RECIPE_FAILURE = '@@echo/ADD_RECIPE_FAILURE';
 
 export const echo = (message) => ({
     [RSAA]: {
-        endpoint: '/api/movies/',
+        endpoint: '/api/recipes/',
         method: 'GET',
         headers: withAuth({'Content-Type': 'application/json'}),
         types: [
@@ -19,14 +19,14 @@ export const echo = (message) => ({
     }
 });
 
-export const addMovie = (myMovie) => ({
+export const addRecipe = (myRecipe) => ({
     [RSAA]: {
-        endpoint: '/api/movies/',
+        endpoint: '/api/recipes/',
         method: 'POST',
-        body: JSON.stringify(myMovie),
+        body: JSON.stringify(myRecipe),
         headers: withAuth({'Content-Type': 'application/json'}),
         types: [
-            ADD_MOVIE_REQUEST, ADD_MOVIE_SUCCESS, ADD_MOVIE_FAILURE
+            ADD_RECIPE_REQUEST, ADD_RECIPE_SUCCESS, ADD_RECIPE_FAILURE
         ]
     }
 });

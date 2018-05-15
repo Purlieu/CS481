@@ -10,7 +10,7 @@ export default (state = initialState, action) => {
             return {
                 message: action.payload
             };
-        case echo.ADD_MOVIE_SUCCESS:
+        case echo.ADD_RECIPE_SUCCESS:
             return {
                 message: state.message.concat(action.payload)
             };

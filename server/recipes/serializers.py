@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import MyMovie
+from .models import MyRecipe
 
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -43,7 +43,7 @@ class MessageSerializer(serializers.Serializer):
     message = serializers.CharField()
 
 
-class MyMovieSerializer(serializers.ModelSerializer):
+class MyRecipeSerializer(serializers.ModelSerializer):
         class Meta:
-            model = MyMovie
+            model = MyRecipe
             exclude = ['owner']

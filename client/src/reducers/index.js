@@ -10,14 +10,14 @@ export default combineReducers({
 })
 
 
-export const isAuthenticated = state => fromAuth.isAuthenticated(state.auth);
-export const accessToken = state => fromAuth.accessToken(state.auth);
-export const isAccessTokenExpired = state => fromAuth.isAccessTokenExpired(state.auth);
-export const refreshToken = state => fromAuth.refreshToken(state.auth);
-export const isRefreshTokenExpired = state => fromAuth.isRefreshTokenExpired(state.auth);
-export const authErrors = state => fromAuth.errors(state.auth);
-export const serverMessage = state => fromEcho.serverMessage(state.echo);
-export const addMovie = state => fromEcho.serverMessage(state.addMovie);
+export const isAuthenticated = state => fromAuth.isAuthenticated(state.auth)
+export const accessToken = state => fromAuth.accessToken(state.auth)
+export const isAccessTokenExpired = state => fromAuth.isAccessTokenExpired(state.auth)
+export const refreshToken = state => fromAuth.refreshToken(state.auth)
+export const isRefreshTokenExpired = state => fromAuth.isRefreshTokenExpired(state.auth)
+export const authErrors = state => fromAuth.errors(state.auth)
+export const serverMessage = state => fromEcho.serverMessage(state.echo)
+export const addRecipe = state => fromEcho.serverMessage(state.addRecipe);
 
 export function withAuth(headers = {}) {
     return (state) => ({

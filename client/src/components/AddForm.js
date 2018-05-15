@@ -1,25 +1,24 @@
 import React, {Component} from 'react';
 import {Button} from 'reactstrap';
 import {connect} from "react-redux";
-import {addMovie} from "../actions/echo";
+import {addRecipe} from "../actions/echo";
 
 class AddForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            movies: [],
+            recipes: [],
             selected: null,
             timer: null,
             searchString: ""
         }
     }
 
-    getMovie = () => {
-        fetch("http://www.omdbapi.com/?apikey=e1a66376&s=" + this.state.searchString)
-            .then(result => result.json())
+    getRecipe = () => {
+        fetch("http://lcboapi.com/products?q=" + this.state.searchString +"&access_key=MDpkYjYxNGM5Yy01NzI1LTExZTgtYWEwNy0zZjE1OTY2YzI1ZjQ6emFLaVBITmZ5bkNuWFpzRnR5bDBFdmtrQXRNeklobWtsQ1py")            .then(result => result.json())
             .then(data => {
-                if (data.Response === "True") this.setState({movies: data.Search});
-                else this.setState({movies: []})
+                if (data.Response === "True") this.setState({recipes: data.result});
+                else this.setState({recipes: []})
             })
     };
 
@@ -27,27 +26,27 @@ class AddForm extends Component {
         clearTimeout(this.state.timer);
         this.setState({searchString: event.target.value});
         if (event.target.value === "") {
-            this.setState({movies: []});
+            this.setState({recipes: []});
         } else {
-            let timer = setTimeout(this.getMovie, 1000);
+            let timer = setTimeout(this.getRecipe, 1000);
             this.setState({timer: timer});
         }
     };
 
-    onSelect = (movie) => this.setState({selected: movie});
+    onSelect = (recipe) => this.setState({selected: recipe});
 
     submit = (e) => {
         e.preventDefault();
-        this.props.addMovie({
-            movie_id: this.state.selected.imdbID,
-            title: this.state.selected.Title,
-            poster: this.state.selected.Poster,
-            purchase_date: e.target[0].value,
-            location: e.target[1].value,
-            rating: e.target[2].value,
-            notes: e.target[3].value
+        this.props.addRecipe({
+            recipe_id: this.state.selected.id,
+            name:  this.state.selected.name,
+            category:  this.state.selected.tertiary_category,
+            price: this.state.selected.price_in_cents,
+            image_url: this.state.selected.image_url,
+            producer: this.state.selected.producer_name,
+
         });
-        this.setState({movies: [], selected: null, searchString: "", timer: null});
+        this.setState({recipes: [], selected: null, searchString: "", timer: null});
         this.props.cancel();
     };
 
@@ -55,27 +54,20 @@ class AddForm extends Component {
         if (this.state.selected) {
             return (
                 <form action="#" method="get" onSubmit={this.submit}>
-                    <label htmlFor="purchase">Purchase Date:</label>
-                    <input id="purchase" type="date" required={true}/>
-                    <label htmlFor="location">Location:</label>
-                    <input id="location" type="text" required={true}/>
-                    <label htmlFor="rating">Personal Rating:</label>
-                    <input id="rating" type="number" required={true}/>
-                    <label htmlFor="notes">Notes:</label>
-                    <input id="notes" type="text" required={true}/>
+
                     <input type="submit"/>
                 </form>
             )
         } else {
-            let movies = this.state.movies.map(movie => (
-                <img key={movie.imdbID} src={movie.Poster} alt={movie.Title} height="120px"
-                     onClick={() => this.onSelect(movie)}/>
+            let recipes = this.state.recipes.map(recipe => (
+                <img key={recipe.id} src={recipe.image_url} alt={recipe.name} height="120px"
+                     onClick={() => this.onSelect(recipe)}/>
             ));
             return (
                 <div>
                     <input type="text" onChange={this.onChange}/>
                     <Button onClick={this.props.cancel}>Cancel</Button>
-                    {movies}
+                    {recipes}
                 </div>
             )
         }
@@ -87,8 +79,8 @@ class AddForm extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    addMovie: (myMovie) => {
-        dispatch(addMovie(myMovie))
+    addRecipe: (myRecipe) => {
+        dispatch(addRecipe(myRecipe))
     }
 });
 

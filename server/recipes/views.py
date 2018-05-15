@@ -1,8 +1,8 @@
 from rest_framework import status, views, generics
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-from .serializers import UserSerializer, MessageSerializer, MyMovieSerializer
-from .models import MyMovie
+from .serializers import UserSerializer, MessageSerializer, MyRecipeSerializer
+from .models import MyRecipe
 from .permissions import IsOwner
 from rest_framework import status, views, generics, permissions
 from rest_framework.response import Response
@@ -28,23 +28,23 @@ class UserList(generics.ListCreateAPIView):
     permission_classes = [permissions.AllowAny]
 
 
-class GetMyMovieList(generics.ListCreateAPIView):
-    serializer_class = MyMovieSerializer
+class GetRecipeList(generics.ListCreateAPIView):
+    serializer_class = MyRecipeSerializer
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
     def get_queryset(self):
         user = self.request.user
-        MoviesList = MyMovie.objects.filter(owner=user)
-        return MoviesList
+        RecipeList = MyRecipe.objects.filter(owner=user)
+        return RecipeList
 
 
-class GetMyMovie(generics.RetrieveUpdateDestroyAPIView):
-    queryset = MyMovie.objects.all()
-    serializer_class = MyMovieSerializer
+class GetMyRecipe(generics.RetrieveUpdateDestroyAPIView):
+    queryset = MyRecipe.objects.all()
+    serializer_class = MyRecipeSerializer
     lookup_field = 'name'
-    lookup_url_kwarg = 'MovieName'
+    lookup_url_kwarg = 'RecipeName'
     permission_classes = (IsOwner,)
 
 
