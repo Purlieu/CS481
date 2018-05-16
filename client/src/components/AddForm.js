@@ -12,13 +12,15 @@ class AddForm extends Component {
             timer: null,
             searchString: ""
         }
+        this.onSelect = this.onSelect.bind(this)
     }
 
     getRecipe = () => {
-        fetch("http://lcboapi.com/products?q=" + this.state.searchString +"&access_key=MDpkYjYxNGM5Yy01NzI1LTExZTgtYWEwNy0zZjE1OTY2YzI1ZjQ6emFLaVBITmZ5bkNuWFpzRnR5bDBFdmtrQXRNeklobWtsQ1py")            .then(result => result.json())
+        fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + this.state.searchString
+            )
+            .then(result => result.json())
             .then(data => {
-                if (data.Response === "True") this.setState({recipes: data.result});
-                else this.setState({recipes: []})
+               this.setState({recipes: data.drinks});
             })
     };
 
@@ -38,12 +40,10 @@ class AddForm extends Component {
     submit = (e) => {
         e.preventDefault();
         this.props.addRecipe({
-            recipe_id: this.state.selected.id,
-            name:  this.state.selected.name,
-            category:  this.state.selected.tertiary_category,
-            price: this.state.selected.price_in_cents,
-            image_url: this.state.selected.image_url,
-            producer: this.state.selected.producer_name,
+            recipe_id: this.state.selected.idDrink,
+            name:  this.state.selected.strDrink,
+            category:  this.state.selected.strCategory,
+            image_url: this.state.selected.strDrinkThumb,
 
         });
         this.setState({recipes: [], selected: null, searchString: "", timer: null});
@@ -54,14 +54,21 @@ class AddForm extends Component {
         if (this.state.selected) {
             return (
                 <form action="#" method="get" onSubmit={this.submit}>
-
+                    <label htmlFor="purchase">Purchase Date:</label>
+                    <input id="purchase" type="date" required={true}/>
+                    <label htmlFor="location">Location:</label>
+                    <input id="location" type="text" required={true}/>
+                    <label htmlFor="rating">Personal Rating:</label>
+                    <input id="rating" type="number" required={true}/>
+                    <label htmlFor="notes">Notes:</label>
+                    <input id="notes" type="text" required={true}/>
                     <input type="submit"/>
                 </form>
             )
         } else {
+
             let recipes = this.state.recipes.map(recipe => (
-                <img key={recipe.id} src={recipe.image_url} alt={recipe.name} height="120px"
-                     onClick={() => this.onSelect(recipe)}/>
+                <DrinkBox idDrink={recipe.idDrink} strDrinkThumb={recipe.strDrinkThumb} strDrink={recipe.strDrink} recipe={recipe} handler={this.onSelect} />
             ));
             return (
                 <div>
@@ -85,3 +92,23 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(AddForm);
+
+class DrinkBox extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            recipe: props.recipe,
+            idDrink: props.idDrink,
+            strDrinkThumb: props.strDrinkThumb,
+            strDrink: props.strDrink,
+        }
+    }
+
+    render() {
+        return (
+            <img key={this.state.idDrink} src={this.state.strDrinkThumb} alt={this.state.strDrink} height="120px"
+                 onClick={() => (this.props.handler(this.state.recipe))}/>
+        )
+    }
+}
+
