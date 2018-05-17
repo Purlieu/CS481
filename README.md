@@ -41,7 +41,7 @@ https://github.com/holyzala/cs481
 ```
 ### Search Instructions
 ```
-> After loggin in, selected "Add Cocktail"
+> After loggin in, select "Add Cocktail"
 > Type in any letter or word corresponding to a beverage, i.e. "vodka"
 > View contents of item by clicking on image
 > Add Item to your collection
