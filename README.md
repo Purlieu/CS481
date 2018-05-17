@@ -33,14 +33,17 @@ https://github.com/holyzala/cs481
 > python manage.py createsuperuser
 > python manage.py runserver
 ```
-
-### Docs
-Once the server is running the swagger docs can be accessed at http://localhost:8000/docs
-
 ### Instructions to run the client
 ```
 > cd client
 > npm install
 > npm run start
 ```
-
+### Search Instructions
+```
+> After loggin in, selected "Add Cocktail"
+> Type in any letter or word corresponding to a beverage, i.e. "vodka"
+> View contents of item by clicking on image
+> Add Item to your collection
+> Item contents may be viewed by clicking on image in "Add Cocktail" page
+```
