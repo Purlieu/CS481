@@ -43,8 +43,8 @@ class GetRecipeList(generics.ListCreateAPIView):
 class GetMyRecipe(generics.RetrieveUpdateDestroyAPIView):
     queryset = MyRecipe.objects.all()
     serializer_class = MyRecipeSerializer
-    lookup_field = 'name'
-    lookup_url_kwarg = 'RecipeName'
+    lookup_field = 'recipe_id'
+    lookup_url_kwarg = 'name'
     permission_classes = (IsOwner,)
 
 

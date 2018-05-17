@@ -5,7 +5,7 @@ import {Button} from 'reactstrap';
 import {logout} from './actions/auth'
 import {echo} from './actions/echo'
 import {serverMessage} from './reducers'
-import Movie from './components/Movie'
+import Recipe from './components/Recipe'
 import Details from "./components/Details";
 import AddForm from "./components/AddForm";
 
@@ -45,13 +45,28 @@ class App extends Component {
         if (this.state.adding) {
             return <AddForm cancel={this.cancelAdd}/>
         }
-        let recipes = this.props.message.map(item => (
-            <Movie key={item.recipe_id} movie={item} click={this.getDetails}/>
-        ));
+        console.log(this.props.message)
+        var i;
+        for(i = 0; i < this.props.message.length; i++) {
+            if(this.props.message[i] === undefined) this.props.message.splice(i, 1)
+        }
+            let recipes = this.props.message.map(item => (
+
+                <Recipe key={item.recipe_id} recipe={item} click={this.getDetails}/>
+            ));
+            return (
+                <div className="addCocktail">
+                    <h3>Add A New Cocktail</h3>
+                    <Button onClick={this.onAdd} color="secondary">Add a Cocktail</Button><br />
+                    {recipes}
+                </div>
+            )
+
+
         return (
-            <div>
-                <Button onClick={this.onAdd} color="secondary">Add a movie</Button>
-                {recipes}
+            <div className="addCocktail">
+                <h3>Add A New Cocktail</h3>
+                <Button onClick={this.onAdd} color="secondary">Add a Cocktail</Button>
             </div>
         )
     };
@@ -59,7 +74,6 @@ class App extends Component {
     render() {
         return (
             <div>
-                <h2>Your Movie List</h2>
                 <Button id="logout" onClick={this.onLogout} color="primary">Logout</Button>
                 {this.getDisplay()}
             </div>

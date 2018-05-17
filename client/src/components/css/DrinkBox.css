@@ -1,0 +1,12 @@
+#drinkBoxContainer > img{
+    height: 280px;
+    z-index: -1;
+}
+
+#drinkBoxContainer {
+    padding:20px;
+    background-color: ghostwhite;
+    border:1px solid grey;
+    position: relative;
+    float: left;
+}

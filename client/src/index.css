@@ -7,7 +7,9 @@ html, body, #root {
 }
 
 body {
-    background: linear-gradient(110deg, #fdcd3b 60%, #ffed4b 60%) no-repeat fixed;
+background: #20002c;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #cbb4d4, #20002c);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #cbb4d4, #20002c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 /*.
@@ -25,4 +27,5 @@ body {
     position: absolute;
     right: 10px;
     top: 10px;
+    z-index: auto;
 }
