@@ -82,6 +82,7 @@ class AddForm extends Component {
                 </div>
             )
         } else {
+            try {
                 let recipes = this.state.recipes.map(recipe => (
                     <DrinkBox key={recipe.idDrink} onClick={() => this.onSelect(recipe)}
                               idDrink={recipe.idDrink}
@@ -93,13 +94,23 @@ class AddForm extends Component {
 
                 ));
                 return (
-                <label id="recipeSubmit">
-                    <h5>Search For Recipe</h5>
-                    <input type="text" onChange={this.onChange}/>
-                    <Button onClick={this.props.cancel}>Cancel</Button>
-                    {recipes}
-                </label>
-            )
+                    <label id="recipeSubmit">
+                        <h5>Search For Recipe</h5>
+                        <input type="text" onChange={this.onChange}/>
+                        <Button onClick={this.props.cancel}>Cancel</Button>
+                        {recipes}
+                    </label>
+                )
+            }
+            catch(TypeError){
+               return (
+                    <label id="recipeSubmit">
+                        <h5>Search For Recipe</h5>
+                        <input type="text" onChange={this.onChange}/>
+                        <Button onClick={this.props.cancel}>Cancel</Button>
+                    </label>
+                )
+            }
 
 
 
